@@ -4,7 +4,10 @@ import React from "react";
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <Box>
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4, bg: "white" }}>
+      <Container
+        maxWidth="lg"
+        sx={{ mt: 4, mb: 4, bg: "white", color: "white" }}
+      >
         {children}
       </Container>
     </Box>
