@@ -1,7 +1,11 @@
 import { Box, Button, IconButton, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { deleteCategory, selectCategories } from "./categorySlice";
+import {
+  selectCategories,
+  useDeleteCategoryMutation,
+  useGetCategoriesQuery,
+} from "./categorySlice";
 import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
@@ -14,14 +18,27 @@ import {
 import { useSnackbar } from "notistack";
 
 export default function ListCategories() {
-  const categories = useAppSelector(selectCategories);
-  const dispatch = useAppDispatch();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { data, isFetching, error } = useGetCategoriesQuery();
+  const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
 
-  const destroyCategory = (id: string) => {
-    dispatch(deleteCategory(id));
-    enqueueSnackbar("Category deleted", { variant: "success" });
+  const categories = useAppSelector(selectCategories);
+  const { enqueueSnackbar } = useSnackbar();
+
+  const destroyCategory = async (id: string) => {
+    await deleteCategory({ id });
   };
+
+  useEffect(() => {
+    if (deleteCategoryStatus.isSuccess) {
+      enqueueSnackbar("Category deleted", { variant: "success" });
+    }
+
+    if (deleteCategoryStatus.error) {
+      enqueueSnackbar("Failed during tentative to delete a Category", {
+        variant: "error",
+      });
+    }
+  }, [deleteCategoryStatus, enqueueSnackbar]);
 
   const rows: GridRowsProp = categories.map(
     ({ id, name, description, created_at, is_active }) => ({

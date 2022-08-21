@@ -12,7 +12,7 @@ export default function EditCategory() {
 
   const [isDisabled, setIsDisabled] = useState(false);
   const [categoryState, setCategoryState] = useState<Category>(category);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
   const dispatch = useAppDispatch();
 
