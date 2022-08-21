@@ -13,7 +13,7 @@ export interface Category {
 
 const category: Category = {
   id: "u1cj89ddd-d8f8-4f8f-b8f8-d8f8d8f8f8f8",
-  name: "Category 1",
+  name: "Horror",
   description: "This is a description for category 1",
   is_active: true,
   deleted_at: null,
@@ -26,13 +26,14 @@ const categories = [
   {
     ...category,
     id: "u1cj79ddd-d7f7-4f7f-b7f7-d7f7d7f7f7f7",
-    name: "Category 2",
+    name: "Romance",
     description: "This is a description for category 2",
+    is_active: false,
   },
   {
     ...category,
     id: "u1cj99ddd-d9f9-4f9f-b9f9-d9f9d9f9f9f9",
-    name: "Category 3",
+    name: "Comedy",
     description: "This is a description for category 3",
   },
 ];
@@ -48,5 +49,16 @@ const categorySlice = createSlice({
 });
 
 export const selectCategories = (state: RootState) => state.categories;
+
+export const selectCategoryById = (state: RootState, id: string) =>
+  state.categories.find((category) => category.id === id) || {
+    id: "",
+    name: "",
+    description: "",
+    is_active: false,
+    created_at: "",
+    updated_at: "",
+    deleted_at: "",
+  };
 
 export default categorySlice.reducer;
