@@ -32,7 +32,7 @@ export function CategoryForm({
 }: CategoryFormProps) {
   return (
     <Box padding={2}>
-      <form>
+      <form onSubmit={onSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <FormControl fullWidth>
@@ -41,7 +41,7 @@ export function CategoryForm({
                 name="name"
                 label="Name"
                 value={category.name}
-                disabled={isDisabled}
+                disabled={false}
                 onChange={handleChange}
               ></TextField>
             </FormControl>
