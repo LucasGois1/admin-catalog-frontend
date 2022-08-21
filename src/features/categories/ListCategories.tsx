@@ -11,13 +11,16 @@ import {
   GridRowsProp,
   GridToolbar,
 } from "@mui/x-data-grid";
+import { useSnackbar } from "notistack";
 
 export default function ListCategories() {
   const categories = useAppSelector(selectCategories);
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const destroyCategory = (id: string) => {
     dispatch(deleteCategory(id));
+    enqueueSnackbar("Category deleted", { variant: "success" });
   };
 
   const rows: GridRowsProp = categories.map(
